@@ -6,6 +6,7 @@ namespace ShootRun
     {
         public void Damage(Vector3 point)
         {
+            Destroy(gameObject);
         }
     }
 }

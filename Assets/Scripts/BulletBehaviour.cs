@@ -1,20 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class BulletBehaviour : MonoBehaviour
+namespace ShootRun
 {
-    private float _speed;
-    // Update is called once per frame
-    void Update()
+    [RequireComponent(typeof(Rigidbody))]
+    public class BulletBehaviour : MonoBehaviour
     {
-        transform.position += _speed * Time.deltaTime * Vector3.forward;
-    }
+        private Rigidbody _rb;
+        private float _maxDistance;
+        private Vector3 _startPos;
 
-    public void Shoot(float speed)
-    {
-        _speed = speed;
-        Destroy(gameObject, 3f);
+        private void Awake()
+        {
+            _rb = GetComponent<Rigidbody>();
+        }
+
+        private void FixedUpdate()
+        {
+            if(Vector3.Distance(_startPos, _rb.position) > _maxDistance)
+                Destroy(gameObject);
+        }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            if (other.collider.TryGetComponent<IObstacle>(out var obs))
+            {
+                obs.Damage(other.contacts[0].point);
+            }
+            Destroy(gameObject);
+        }
+
+        public void Shoot(float speed, float maxDistance)
+        {
+            _startPos = _rb.position;
+            _rb.velocity = speed * Vector3.forward;
+            _maxDistance = maxDistance;
+        }
     }
-    
 }
+

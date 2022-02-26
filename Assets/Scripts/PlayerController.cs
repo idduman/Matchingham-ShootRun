@@ -35,6 +35,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (!_started)
+            return;
+        
         var pos = transform.position;
         pos.z += _moveSpeed * Time.deltaTime;
         pos.x = Mathf.Lerp(pos.x, _offsetX, _responsiveness * Time.deltaTime);
@@ -54,6 +57,9 @@ public class PlayerController : MonoBehaviour
 
     private void Unsubscribe()
     {
+        if (!InputController.Instance)
+            return;
+        
         InputController.Instance.Pressed -= OnPressed;
         InputController.Instance.Moved -= OnMoved;
     }

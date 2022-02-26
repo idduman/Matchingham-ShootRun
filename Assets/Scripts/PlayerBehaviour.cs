@@ -13,6 +13,7 @@ namespace ShootRun
         [SerializeField] private BulletBehaviour _bulletPrefab;
         [SerializeField] private float _shootInterval;
         [SerializeField] private float _shootVelocity;
+        [SerializeField] private float _shootDistance;
 
         public bool Shooting;
         
@@ -51,7 +52,7 @@ namespace ShootRun
         private void Shoot()
         {
             var bullet = Instantiate(_bulletPrefab, _muzzle.position, Quaternion.identity);
-            bullet.Shoot(_shootVelocity);
+            bullet.Shoot(_shootVelocity, _shootDistance);
         }
 
         private IEnumerator ShootRoutine()
