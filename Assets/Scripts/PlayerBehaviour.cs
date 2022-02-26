@@ -1,9 +1,5 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Build;
 using UnityEngine;
-
 namespace ShootRun
 {
     [RequireComponent(typeof(PlayerController))]
@@ -14,33 +10,47 @@ namespace ShootRun
         [SerializeField] private float _shootInterval;
         [SerializeField] private float _shootVelocity;
         [SerializeField] private float _shootDistance;
-
+        
         public bool Shooting;
+        private Transform _finish;
         
         private PlayerController _controller;
-        // Start is called before the first frame update
+
+        private bool _finished;
+        
         void Awake()
         {
             _controller = GetComponent<PlayerController>();
+            _finish = GameObject.FindGameObjectWithTag("Finish").transform;
             Shooting = false;
             StartCoroutine(ShootRoutine());
         }
-
         private void OnDestroy()
         {
             StopAllCoroutines();
         }
-
-        // Update is called once per frame
         void Update()
         {
-        
+            if (_finished)
+                return;
+            
+            if (transform.position.z > _finish.position.z)
+                Finish(true);
+        }
+
+        private void Finish(bool success)
+        {
+            _finished = true;
+            _controller.Active = false;
+            StopAllCoroutines();
+            GameManager.Instance.FinishGame(success);
         }
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent<IObstacle>(out var obs))
             {
+                Finish(false);
             }
         }
 
@@ -59,7 +69,7 @@ namespace ShootRun
         {
             while (true)
             {
-                if (Shooting)
+                if (Shooting && !_finished)
                 {
                     yield return new WaitForSeconds(_shootInterval);
                     Shoot();
