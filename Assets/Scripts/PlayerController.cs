@@ -25,7 +25,8 @@ namespace ShootRun
         private void Start()
         {
             _started = false;
-            OnLevelLoaded();
+            Active = true;
+            Subscribe();
         }
     
         private void OnDestroy()
@@ -43,13 +44,7 @@ namespace ShootRun
             pos.x = Mathf.Lerp(pos.x, _offsetX, _responsiveness * Time.deltaTime);
             transform.position = pos;
         }
-    
-        private void OnLevelLoaded()
-        {
-            Subscribe();
-            Active = true;
-        }
-    
+
         private void Subscribe()
         {
             InputController.Instance.Pressed += OnPressed;

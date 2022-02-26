@@ -18,7 +18,7 @@ namespace ShootRun
 
         private bool _finished;
         
-        void Awake()
+        void Start()
         {
             _controller = GetComponent<PlayerController>();
             _finish = GameObject.FindGameObjectWithTag("Finish").transform;
@@ -29,6 +29,7 @@ namespace ShootRun
         {
             StopAllCoroutines();
         }
+        
         void Update()
         {
             if (_finished)
@@ -37,15 +38,7 @@ namespace ShootRun
             if (transform.position.z > _finish.position.z)
                 Finish(true);
         }
-
-        private void Finish(bool success)
-        {
-            _finished = true;
-            _controller.Active = false;
-            StopAllCoroutines();
-            GameManager.Instance.FinishGame(success);
-        }
-
+        
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent<IObstacle>(out var obs))
@@ -53,10 +46,16 @@ namespace ShootRun
                 Finish(false);
             }
         }
-
-        private void Fail()
+        
+        private void Finish(bool success)
         {
-            GameManager.Instance.FinishGame(false);
+            if (_finished)
+                return;
+            
+            _finished = true;
+            _controller.Active = false;
+            StopAllCoroutines();
+            GameManager.Instance.FinishGame(success);
         }
 
         private void Shoot()
