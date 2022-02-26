@@ -67,6 +67,7 @@ namespace ShootRun
     
             _started = true;
             _player.Shooting = true;
+            UIController.Instance.ToggleTutorialPanel(false);
         }
     
         private void OnMoved(Vector3 inputDelta)

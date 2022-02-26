@@ -29,8 +29,13 @@ namespace ShootRun
         {
             if(_level)
                 DestroyImmediate(_level.gameObject);
+
+            var index = CurrentLevel % _levels.Count;
             
-            _level = Instantiate(_levels[CurrentLevel % _levels.Count]);
+            _level = Instantiate(_levels[index]);
+            UIController.Instance.SetLevelText(index);
+            if(index == 0)
+                UIController.Instance.ToggleTutorialPanel(true);
         }
 
         public void FinishGame(bool success)
