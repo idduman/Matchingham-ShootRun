@@ -17,6 +17,11 @@ namespace ShootRun
         {
         
         }
+
+        public void FinishGame(bool success)
+        {
+            
+        }
     }
 }
 

@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using ShootRun;
 using UnityEngine;
 
@@ -12,12 +14,23 @@ public class PlayerController : MonoBehaviour
 
     private bool _started;
     private float _offsetX;
-    
+    [CanBeNull] private PlayerBehaviour _player;
+
+    private void Awake()
+    {
+        _player = GetComponent<PlayerBehaviour>();
+    }
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _started = false;
         OnLevelLoaded();
+    }
+
+    private void OnDestroy()
+    {
+        Unsubscribe();
     }
 
     private void Update()
@@ -39,7 +52,7 @@ public class PlayerController : MonoBehaviour
         InputController.Instance.Moved += OnMoved;
     }
 
-    private void Unsunscribe()
+    private void Unsubscribe()
     {
         InputController.Instance.Pressed -= OnPressed;
         InputController.Instance.Moved -= OnMoved;
@@ -51,6 +64,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         _started = true;
+        _player.Shooting = true;
     }
 
     private void OnMoved(Vector3 inputDelta)
