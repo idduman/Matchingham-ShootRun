@@ -32,7 +32,7 @@ namespace ShootRun
         public void Shoot(float speed, float maxDistance)
         {
             _startPos = _rb.position;
-            _rb.velocity = speed * Vector3.forward;
+            _rb.velocity = speed * transform.forward;
             _maxDistance = maxDistance;
         }
     }

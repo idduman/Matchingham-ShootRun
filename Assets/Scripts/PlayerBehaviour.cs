@@ -5,12 +5,9 @@ namespace ShootRun
     [RequireComponent(typeof(PlayerController))]
     public class PlayerBehaviour : MonoBehaviour
     {
-        [SerializeField] private Transform _muzzle;
-        [SerializeField] private BulletBehaviour _bulletPrefab;
         [SerializeField] private float _shootInterval;
-        [SerializeField] private float _shootVelocity;
-        [SerializeField] private float _shootDistance;
-        
+        [SerializeField] private WeaponBehaviour _weapon;
+
         public bool Shooting;
         private Transform _finish;
         
@@ -45,6 +42,15 @@ namespace ShootRun
             {
                 Finish(false);
             }
+
+            if (other.CompareTag("Door1"))
+            {
+                _weapon.CurrentWeapon = 1;
+            }
+            else if (other.CompareTag("Door2"))
+            {
+                _weapon.CurrentWeapon = 2;
+            }
         }
         
         private void Finish(bool success)
@@ -58,12 +64,6 @@ namespace ShootRun
             GameManager.Instance.FinishGame(success);
         }
 
-        private void Shoot()
-        {
-            var bullet = Instantiate(_bulletPrefab, _muzzle.position, Quaternion.identity);
-            bullet.Shoot(_shootVelocity, _shootDistance);
-        }
-
         private IEnumerator ShootRoutine()
         {
             while (true)
@@ -71,7 +71,7 @@ namespace ShootRun
                 if (Shooting && !_finished)
                 {
                     yield return new WaitForSeconds(_shootInterval);
-                    Shoot();
+                    _weapon.Shoot();
                 }
                 yield return null;
             }

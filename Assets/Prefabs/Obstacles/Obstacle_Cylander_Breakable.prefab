@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7090477174595049920}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Obstacle_Cylander_Breakable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,6 +83,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 5cbb72520f7443f49b700d24eeec82e9, type: 3}
       propertyPath: m_Name
       value: SM_PolygonPrototype_Primitive_Cylander_01P
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 5cbb72520f7443f49b700d24eeec82e9, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5cbb72520f7443f49b700d24eeec82e9, type: 3}
       propertyPath: m_RootOrder
