@@ -22,6 +22,7 @@ namespace ShootRun
                 Debug.LogError("No levels found");
                 return;
             }
+            CurrentLevel = PlayerPrefs.GetInt("PlayerLevel", 0);
             LoadLevel();
         }
 
@@ -42,6 +43,8 @@ namespace ShootRun
         {
             if (success)
                 CurrentLevel++;
+            
+            PlayerPrefs.SetInt("PlayerLevel", CurrentLevel);
             
             UIController.Instance.ActivateEndgamePanel(success);
         }
