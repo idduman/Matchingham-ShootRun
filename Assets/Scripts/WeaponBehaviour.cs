@@ -6,6 +6,7 @@ namespace ShootRun
 {
     public class WeaponBehaviour : MonoBehaviour
     {
+        [SerializeField] private Transform _followPoint;
         [SerializeField] private float _shootVelocity;
         [SerializeField] private float _shootMaxDistance;
         [SerializeField] private float _multishotAngle;
@@ -32,6 +33,12 @@ namespace ShootRun
         private void Start()
         {
             CurrentWeapon = 0;
+        }
+
+        private void Update()
+        {
+            if(_followPoint)
+                transform.position = _followPoint.position;
         }
 
         public void Shoot()

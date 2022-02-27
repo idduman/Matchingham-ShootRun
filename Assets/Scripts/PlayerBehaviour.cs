@@ -45,12 +45,18 @@ namespace ShootRun
 
             if (other.CompareTag("Door1"))
             {
-                _weapon.CurrentWeapon = 1;
+                ChangeWeapon(1);
             }
             else if (other.CompareTag("Door2"))
             {
-                _weapon.CurrentWeapon = 2;
+                ChangeWeapon(2);
             }
+        }
+
+        private void ChangeWeapon(int weapon)
+        {
+            _weapon.CurrentWeapon = weapon;
+            _controller.ChangeWeaponAnimation(weapon);
         }
         
         private void Finish(bool success)
