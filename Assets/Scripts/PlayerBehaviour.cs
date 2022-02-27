@@ -70,6 +70,9 @@ namespace ShootRun
             GameManager.Instance.FinishGame(success);
         }
 
+        /// <summary>
+        /// Coroutine for shooting
+        /// </summary>
         private IEnumerator ShootRoutine()
         {
             while (true)

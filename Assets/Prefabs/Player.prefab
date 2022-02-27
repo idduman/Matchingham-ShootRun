@@ -372,7 +372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2340fefae75964dbef4591401c38fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shootInterval: 0.3
+  _shootInterval: 0.25
   _weapon: {fileID: 2456667045505178782}
   Shooting: 0
 --- !u!1001 &769910509444211246
